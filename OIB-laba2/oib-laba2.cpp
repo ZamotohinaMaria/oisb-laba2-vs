@@ -82,11 +82,22 @@ void TheLargestSequence(const string seq)
 
 	for (int i = 0; i < 128; i += 8)
 	{
-		for (int j = i; j < i + 8; j += 1)
+		k = 0;
+		for (int j = i; j < i + 7; j += 1)
 		{
-			if (seq[j] == '1') k += 1;
-			else k = 0;
+			if (seq[j] == '1')
+			{
+				int count = 1, q = j + 1;
+				while (seq[q] == '1' && q != 8)
+				{
+					count++;
+					q++;
+				}
+				if (count > k)
+					k = count;
+			}
 		}
+		cout << i << '\t' << k << endl;
 		if (k <= 1) v[0] += 1;
 		if (k == 2) v[1] += 1;
 		if (k == 3) v[2] += 1;
