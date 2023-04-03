@@ -39,7 +39,7 @@ void FrequencyBitwiseTest(const string seq)
 	s = s / sqrt(128);
 	p = erfc(s / sqrt(2));
 
-	FILE* file = fopen("random_sequence.txt", "a");
+	FILE* file = fopen("FrequencyBitwiseTest.txt", "a");
 	fprintf(file, "%lf", p);
 	fprintf(file, "%c", '\n');
 	fclose(file);
@@ -67,7 +67,7 @@ void IdenticalBits(const string seq)
 
 		p = erfc((abs(v - 2 * 128 * ones * (1 - ones))) / (2 * sqrt(2 * 128) * ones * (1 - ones)));
 	}
-	FILE* file = fopen("random_sequence.txt", "a");
+	FILE* file = fopen("IdenticalBits.txt", "a");
 	fprintf(file, "%lf", p);
 	fprintf(file, "%c", '\n');
 	fclose(file);
@@ -87,7 +87,6 @@ void TheLargestSequence(const string seq)
 			if (seq[j] == '1') k += 1;
 			else k = 0;
 		}
-		cout << i << '\t' << k << endl;
 		if (k <= 1) v[0] += 1;
 		if (k == 2) v[1] += 1;
 		if (k == 3) v[2] += 1;
@@ -97,9 +96,8 @@ void TheLargestSequence(const string seq)
 	for (int i = 0; i <= 3; i++)
 	{
 		x += pow((v[i] - 16 * pi[i]), 2) / (16 * pi[i]);
-		cout << 'x' << x << endl;
 	}
-	FILE* file = fopen("random_sequence.txt", "a");
+	FILE* file = fopen("TheLargestSequence.txt", "a");
 	fprintf(file, "%lf", x);
 	fprintf(file, "%c", '\n');
 	fclose(file);
@@ -119,14 +117,17 @@ bool FileIsExist(string filePath)
 
 int main()
 {
-	if (FileIsExist("random_sequence.txt")) remove("random_sequence.txt");
+	if (FileIsExist("RandomSequence.txt")) remove("RandomSequence.txt");
+	if (FileIsExist("FrequencyBitwiseTest.txt")) remove("FrequencyBitwiseTest.txt");
+	if (FileIsExist("IdenticalBits.txt")) remove("IdenticalBits.txt");
+	if (FileIsExist("TheLargestSequence.txt")) remove("TheLargestSequence.txt");
 	string seq = "";
 	for (int q = 0; q < 3; q++)
 	{
 		seq = Generation();
 		seq += '\n';
 
-		FILE* file = fopen("random_sequence.txt", "a");
+		FILE* file = fopen("RandomSequence.txt", "a");
 		const char* str = seq.c_str();
 		fprintf(file, "%s", str);
 		fclose(file);
