@@ -73,6 +73,38 @@ void IdenticalBits(const string seq)
 	fclose(file);
 }
 
+void TheLargestSequence(const string seq)
+{
+	double pi[] = {0.2148, 0.3672, 0.2305, 0.1875};
+	int v[] = { 0, 0, 0, 0 };
+	int k = 0;
+	double x = 0;
+
+	for (int i = 0; i < 128; i += 8)
+	{
+		for (int j = i; j < i + 8; j += 1)
+		{
+			if (seq[j] == '1') k += 1;
+			else k = 0;
+		}
+		cout << i << '\t' << k << endl;
+		if (k <= 1) v[0] += 1;
+		if (k == 2) v[1] += 1;
+		if (k == 3) v[2] += 1;
+		if (k >= 4) v[3] += 1;
+	}
+
+	for (int i = 0; i <= 3; i++)
+	{
+		x += pow((v[i] - 16 * pi[i]), 2) / (16 * pi[i]);
+		cout << 'x' << x << endl;
+	}
+	FILE* file = fopen("random_sequence.txt", "a");
+	fprintf(file, "%lf", x);
+	fprintf(file, "%c", '\n');
+	fclose(file);
+}
+
 bool FileIsExist(string filePath)
 {
 	bool isExist = false;
@@ -101,6 +133,7 @@ int main()
 
 		FrequencyBitwiseTest(seq);
 		IdenticalBits(seq);
+		TheLargestSequence(seq);
 	}
 	return 0;
 }
